@@ -24,9 +24,10 @@ func SetupHttpHandler() *mux.Router {
 	return h
 }
 
-func RunHttpServer(h http.Handler) {
+func RunHttpServer(h http.Handler, port int) {
+	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	s := &http.Server{
-		Addr: "0.0.0.0:8080",
+		Addr: addr,
 		// Good practice to set timeouts to avoid Slowloris attacks.
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
