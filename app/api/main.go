@@ -1,12 +1,14 @@
 package main
 
 import (
+	"tigade"
 	"tigade/delivery"
 )
 
 func main() {
 	// Initializing core application
-	// TODO
+	core := tigade.NewCoreService()
+	defer core.Shutdown()
 
 	// Initializing http handler
 	h := delivery.SetupHttpHandler()
