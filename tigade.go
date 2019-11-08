@@ -37,20 +37,21 @@ func NewCoreService() *CoreService {
 	cfg := config.GetInstance()
 	conns := NewConnections()
 
-	mysql, err := database.NewMysqlConn(&cfg.MysqlWrite, cfg.MysqlRead)
-	CheckError(err)
+	var mysql *database.MysqlClient
+	if cfg.MysqlMasterSlave {
+		mysql = database.NewMysqlMasterSlave(cfg.MysqlWrite, cfg.MysqlRead)
+	} else {
+		mysql = database.NewMysqlMasterOnly(cfg.MysqlWrite)
+	}
 	conns.Add(mysql)
 
-	elastic, err := database.NewElasticConn(cfg.Elastic)
-	CheckError(err)
+	elastic := database.NewElasticConn(cfg.Elastic)
 	conns.Add(elastic)
 
-	mongo, err := database.NewMongoConn(cfg.Mongo)
-	CheckError(err)
+	mongo := database.NewMongoConn(cfg.Mongo)
 	conns.Add(mongo)
 
-	redis, err := database.NewRedisConn(cfg.Redis)
-	CheckError(err)
+	redis := database.NewRedisConn(cfg.Redis)
 	conns.Add(redis)
 
 	logger := tool.NewLogger(cfg.Environment)

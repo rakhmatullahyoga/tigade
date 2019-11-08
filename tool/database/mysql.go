@@ -28,29 +28,34 @@ func (m *MysqlClient) CloseConnection() {
 	m.dbRead.Close()
 }
 
-// Construct mysql connection(s)
-func NewMysqlConn(writeConfig, readConfig *MysqlConfig) (*MysqlClient, error) {
+func NewMysqlMasterOnly(cfg MysqlConfig) *MysqlClient {
+	db, err := buildConnection(cfg)
+	if err != nil {
+		panic(err)
+	}
+	return &MysqlClient{
+		dbRead:  db,
+		dbWrite: db,
+	}
+}
+
+func NewMysqlMasterSlave(writeConfig, readConfig MysqlConfig) *MysqlClient {
 	dbWrite, err := buildConnection(writeConfig)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	var dbRead *sql.DB
-	if readConfig != nil {
-		dbRead, err = buildConnection(readConfig)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		dbRead = dbWrite
+	dbRead, err := buildConnection(readConfig)
+	if err != nil {
+		panic(err)
 	}
 	return &MysqlClient{
 		dbRead:  dbRead,
 		dbWrite: dbWrite,
-	}, nil
+	}
 }
 
-func buildConnection(cfg *MysqlConfig) (*sql.DB, error) {
+func buildConnection(cfg MysqlConfig) (*sql.DB, error) {
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=True&enableCircuitBreaker=true",
 		cfg.Username,
 		cfg.Password,

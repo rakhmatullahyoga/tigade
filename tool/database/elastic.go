@@ -13,14 +13,14 @@ type ElasticClient struct {
 }
 
 // Construct elastic connection
-func NewElasticConn(elasticCfg ElasticConfig) (*ElasticClient, error) {
+func NewElasticConn(elasticCfg ElasticConfig) *ElasticClient {
 	esHost := elasticCfg.Host
 	url := elastic.SetURL(esHost)
 	client, err := elastic.NewClient(url)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	return &ElasticClient{client}, nil
+	return &ElasticClient{client}
 }
 
 // defer call this function on main program

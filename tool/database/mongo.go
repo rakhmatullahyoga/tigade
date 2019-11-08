@@ -25,7 +25,7 @@ type MongoClient struct {
 }
 
 // Construct mongo connection(s)
-func NewMongoConn(mongoCfg MongoConfig) (*MongoClient, error) {
+func NewMongoConn(mongoCfg MongoConfig) *MongoClient {
 	credential := options.Credential{
 		Username:   mongoCfg.Username,
 		Password:   mongoCfg.Password,
@@ -41,14 +41,14 @@ func NewMongoConn(mongoCfg MongoConfig) (*MongoClient, error) {
 	clientOpt.SetMaxConnIdleTime(mongoCfg.Timeout)
 	client, err := mongo.Connect(context.Background(), clientOpt)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	db := client.Database(mongoCfg.DbName)
 
 	return &MongoClient{
 		Client:   client,
 		Database: db,
-	}, nil
+	}
 }
 
 // defer call this function on main program
