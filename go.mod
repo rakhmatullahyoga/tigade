@@ -1,4 +1,4 @@
-module tigade
+module github.com/rakhmatullahyoga/tigade
 
 go 1.13
 

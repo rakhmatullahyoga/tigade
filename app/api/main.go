@@ -1,8 +1,8 @@
 package main
 
 import (
-	"tigade"
-	"tigade/delivery"
+	"github.com/rakhmatullahyoga/tigade"
+	"github.com/rakhmatullahyoga/tigade/delivery"
 )
 
 func main() {

@@ -1,9 +1,9 @@
 package tigade
 
 import (
-	"tigade/config"
-	"tigade/tool"
-	"tigade/tool/database"
+	"github.com/rakhmatullahyoga/tigade/config"
+	"github.com/rakhmatullahyoga/tigade/tool"
+	"github.com/rakhmatullahyoga/tigade/tool/database"
 )
 
 type PersistenceConnection interface {

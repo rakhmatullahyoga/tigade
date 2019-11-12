@@ -1,13 +1,14 @@
 package config
 
 import (
-	"github.com/subosito/gotenv"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
-	"tigade/tool/database"
 	"time"
+
+	"github.com/rakhmatullahyoga/tigade/tool/database"
+	"github.com/subosito/gotenv"
 )
 
 //Config represent global config
