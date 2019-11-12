@@ -4,12 +4,6 @@ import (
 	"go.uber.org/zap"
 )
 
-type Logger interface {
-	LogInfo(trackId string, tags []string, message string)
-	LogError(trackId string, tags []string, message string, error error, code int)
-	LogPanic(trackId string, tags []string, message string, error error, code int)
-}
-
 type LogAdapter struct {
 	*zap.Logger
 }
@@ -17,10 +11,10 @@ type LogAdapter struct {
 func NewLogger(env string) *LogAdapter {
 	var l *zap.Logger
 	switch env {
-	case "production":
-		l, _ = zap.NewProduction()
-	default:
+	case "development":
 		l, _ = zap.NewDevelopment()
+	default:
+		l, _ = zap.NewProduction()
 	}
 	return &LogAdapter{l}
 }

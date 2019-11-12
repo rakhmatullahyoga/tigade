@@ -6,6 +6,12 @@ import (
 	"github.com/rakhmatullahyoga/tigade/tool/database"
 )
 
+type Logger interface {
+	LogInfo(trackId string, tags []string, message string)
+	LogError(trackId string, tags []string, message string, error error, code int)
+	LogPanic(trackId string, tags []string, message string, error error, code int)
+}
+
 type PersistenceConnection interface {
 	CloseConnection()
 }
@@ -30,7 +36,7 @@ func (c *connection) Add(client PersistenceConnection) {
 
 type CoreService struct {
 	connections *connection
-	Logger      tool.Logger
+	Logger      Logger
 }
 
 func NewCoreService() *CoreService {
