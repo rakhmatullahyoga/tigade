@@ -25,7 +25,7 @@ func SetupHttpHandler() *mux.Router {
 	return h
 }
 
-func RunHttpServer(h http.Handler, port int) {
+func RunHttpServer(h http.Handler, port uint16) {
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	s := &http.Server{
 		Addr: addr,

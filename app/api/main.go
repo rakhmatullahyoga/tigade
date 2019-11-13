@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/rakhmatullahyoga/tigade"
 	"github.com/rakhmatullahyoga/tigade/delivery"
+	"github.com/rakhmatullahyoga/tigade/config"
 )
 
 func main() {
@@ -17,5 +18,6 @@ func main() {
 	// TODO
 
 	// run http server
-	delivery.RunHttpServer(h, 8080)
+	port := config.GetInstance().AppPort
+	delivery.RunHttpServer(h, port)
 }
