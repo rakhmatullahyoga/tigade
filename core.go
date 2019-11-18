@@ -6,6 +6,7 @@ import (
 	"github.com/rakhmatullahyoga/tigade/tool/database"
 )
 
+// Dependencies adapter definition
 type Logger interface {
 	LogInfo(trackId string, tags []string, message string)
 	LogError(trackId string, tags []string, message string, error error, code int)
@@ -34,6 +35,7 @@ func (c *connection) Add(client PersistenceConnection) {
 	c.clients = append(c.clients, client)
 }
 
+// Core of the service: the application use cases and its dependencies
 type CoreService struct {
 	connections *connection
 	Logger      Logger

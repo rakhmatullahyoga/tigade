@@ -37,8 +37,9 @@ func RunHttpServer(h http.Handler, port uint16) {
 	}
 
 	go func() {
+		log.Printf("The service is running at %s\n", s.Addr)
 		if err := s.ListenAndServe(); err != nil {
-			log.Println(err)
+			log.Fatalln(err)
 		}
 	}()
 
