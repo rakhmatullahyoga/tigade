@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/rakhmatullahyoga/tigade"
-	"github.com/rakhmatullahyoga/tigade/delivery"
 	"github.com/rakhmatullahyoga/tigade/config"
+	"github.com/rakhmatullahyoga/tigade/delivery"
 )
 
 func main() {
@@ -14,10 +14,10 @@ func main() {
 	// Initializing http handler
 	h := delivery.SetupHttpHandler()
 
-	// setup domain handlers and middleware
+	// Setup domain handlers and middleware
 	// TODO
 
-	// run http server
+	// Run http server
 	port := config.GetInstance().AppPort
 	delivery.RunHttpServer(h, port)
 }

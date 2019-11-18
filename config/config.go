@@ -11,7 +11,7 @@ import (
 	"github.com/subosito/gotenv"
 )
 
-//Config represent global config
+// Config struct: represent global application config
 type Config struct {
 	Environment      string
 	AppPort          uint16
