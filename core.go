@@ -4,6 +4,7 @@ import (
 	"github.com/rakhmatullahyoga/tigade/config"
 	"github.com/rakhmatullahyoga/tigade/tool"
 	"github.com/rakhmatullahyoga/tigade/tool/database"
+	"time"
 )
 
 // Dependencies adapter definition
@@ -11,6 +12,16 @@ type Logger interface {
 	LogInfo(trackId string, tags []string, message string)
 	LogError(trackId string, tags []string, message string, error error, code int)
 	LogPanic(trackId string, tags []string, message string, error error, code int)
+}
+
+type Job interface {
+	Perform()
+}
+
+type Scheduler interface {
+	EnqueuePerform(job Job)
+	DelayPerform(job Job, delay time.Duration)
+	SchedulePerform(job Job, time time.Time)
 }
 
 type PersistenceConnection interface {
