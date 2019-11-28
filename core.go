@@ -14,14 +14,11 @@ type Logger interface {
 	LogPanic(trackId string, tags []string, message string, error error, code int)
 }
 
-type Job interface {
-	Perform()
-}
-
-type Scheduler interface {
-	EnqueuePerform(job Job)
-	DelayPerform(job Job, delay time.Duration)
-	SchedulePerform(job Job, time time.Time)
+// Worker is an interface for background job processor
+type Worker interface {
+	EnqueuePerform(jobName string, payload map[string]interface{})
+	DelayPerform(jobName string, payload map[string]interface{}, delay time.Duration)
+	SchedulePerform(jobName string, payload map[string]interface{}, time time.Time)
 }
 
 type PersistenceConnection interface {
