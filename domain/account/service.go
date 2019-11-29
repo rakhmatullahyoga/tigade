@@ -2,7 +2,7 @@ package account
 
 import "github.com/rakhmatullahyoga/tigade"
 
-type UserRepository interface {
+type userRepository interface {
 	Insert(user tigade.User) (uint64, error)
 	FindByID(id uint64) (*tigade.User, error)
 	Update(id uint64, user tigade.User) error
@@ -10,22 +10,23 @@ type UserRepository interface {
 	ActivateByID(id uint64) error
 }
 
-type UserFactory interface {
+type userFactory interface {
 	CreateNewUser(email, password, name string) tigade.User
 }
 
-type TokenFactory interface {
+type tokenFactory interface {
 	CreateActivationToken(ID uint64) tigade.Token
 	CreateAuthToken(user tigade.User) tigade.Token
 }
 
 type service struct {
-	tf TokenFactory
-	uf UserFactory
-	ur UserRepository
+	tf tokenFactory
+	uf userFactory
+	ur userRepository
 }
 
-func NewService(tf TokenFactory, uf UserFactory, ur UserRepository) tigade.AccountService {
+// NewService construct the account service
+func NewService(tf tokenFactory, uf userFactory, ur userRepository) tigade.AccountService {
 	return service{tf, uf, ur}
 }
 

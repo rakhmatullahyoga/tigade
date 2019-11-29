@@ -2,15 +2,16 @@ package auth
 
 import "github.com/rakhmatullahyoga/tigade"
 
-type UserRepository interface {
+type userRepository interface {
 	FindByEmail(email string)
 }
 
 type service struct {
-	ur UserRepository
+	ur userRepository
 }
 
-func NewService(ur UserRepository) tigade.AuthService {
+// NewService construct the auth service
+func NewService(ur userRepository) tigade.AuthService {
 	return service{ur}
 }
 
