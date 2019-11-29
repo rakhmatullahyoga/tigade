@@ -4,6 +4,7 @@ import (
 	"github.com/rakhmatullahyoga/tigade/config"
 	"github.com/rakhmatullahyoga/tigade/tool"
 	"github.com/rakhmatullahyoga/tigade/tool/database"
+	"time"
 )
 
 // Dependencies adapter definition
@@ -11,6 +12,13 @@ type Logger interface {
 	LogInfo(trackId string, tags []string, message string)
 	LogError(trackId string, tags []string, message string, error error, code int)
 	LogPanic(trackId string, tags []string, message string, error error, code int)
+}
+
+// Worker is an interface for background job processor
+type Worker interface {
+	EnqueuePerform(jobName string, payload map[string]interface{})
+	DelayPerform(jobName string, payload map[string]interface{}, delay time.Duration)
+	SchedulePerform(jobName string, payload map[string]interface{}, time time.Time)
 }
 
 type PersistenceConnection interface {
