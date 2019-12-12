@@ -26,3 +26,6 @@
 
 ### Patches
 *.patch
+
+### VisualStudioCode template
+.vscode/*
